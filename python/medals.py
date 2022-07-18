@@ -20,12 +20,25 @@ medalResults = [
 def createMedalTable(results):
     # Use the results object above to create a medal table
     # The winner gets 3 points, second place 2 points and third place 1 point
-    return
+    table = {}   
+    for x in results:
+        podium = x["podium"]
+        for y in podium:
+            position, country = y.split(".")
+            position = int(position)
+            if position == 3:
+                position = 1
+            elif position == 1:
+                position = 3
+            table[country] = table.get(country, 0) + position
+    
+    return table
 
 
 def test_function():
     #This it the test function, please don't change me
     medalTable = createMedalTable(medalResults)
+    print(medalTable)
     expectedTable = {
         "Italy": 4,
         "France": 4,
@@ -38,3 +51,5 @@ def test_function():
         "Belarus": 1,
     }
     assert medalTable == expectedTable
+    
+test_function()
